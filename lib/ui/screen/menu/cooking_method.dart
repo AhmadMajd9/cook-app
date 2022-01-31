@@ -2,10 +2,12 @@ import 'dart:io';
 
 import 'package:cook/constant.dart';
 import 'package:cook/models/food.dart';
+import 'package:cook/providers/database_provider.dart';
 import 'package:cook/ui/widget/tologe.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:clip_shadow/clip_shadow.dart';
+import 'package:provider/provider.dart';
 
 class IndividualItem extends StatefulWidget {
   final Food food;
@@ -16,11 +18,11 @@ class IndividualItem extends StatefulWidget {
 }
 
 class _IndividualItemState extends State<IndividualItem> {
+  Color _iconColor = Colors.grey;
+  int _toggleValue = 0;
+
   @override
   Widget build(BuildContext context) {
-    Color _iconColor = Colors.grey;
-    int _toggleValue = 0;
-
     return Scaffold(
       body: ListView(
         padding: EdgeInsets.zero,
@@ -67,7 +69,7 @@ class _IndividualItemState extends State<IndividualItem> {
                             onTap: () {
                               Navigator.of(context).pop();
                             },
-                            child: Icon(
+                            child: const Icon(
                               Icons.arrow_back_ios_rounded,
                               color: Colors.white,
                             ),
@@ -89,7 +91,7 @@ class _IndividualItemState extends State<IndividualItem> {
                               height: 700,
                               width: double.infinity,
                               padding: const EdgeInsets.symmetric(vertical: 30),
-                              decoration: ShapeDecoration(
+                              decoration: const ShapeDecoration(
                                 color: Colors.white,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.only(
@@ -178,7 +180,7 @@ class _IndividualItemState extends State<IndividualItem> {
                               alignment: Alignment.topRight,
                               child: ClipShadow(
                                 clipper: CustomTriangle(),
-                                boxShadow: [
+                                boxShadow: const [
                                   BoxShadow(
                                     color: Color(0xFFB6B7B7),
                                     offset: Offset(0, 5),
@@ -192,11 +194,21 @@ class _IndividualItemState extends State<IndividualItem> {
                                   child: IconButton(
                                     icon: Icon(
                                       Icons.favorite,
-                                      color: _iconColor,
+                                      color: widget.food.isFavorites
+                                          ? Colors.orange
+                                          : Colors.grey,
                                     ),
                                     onPressed: () {
                                       setState(() {
-                                        _iconColor = Colors.orange;
+                                        print(widget.food.isFavorites);
+
+                                        widget.food.isFavorites =
+                                            !widget.food.isFavorites;
+                                        print(widget.food.isFavorites);
+
+                                        Provider.of<DatabaseProvider>(context,
+                                                listen: false)
+                                            .updateFood(widget.food);
                                       });
                                     },
                                   ),

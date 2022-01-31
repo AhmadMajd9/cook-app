@@ -20,6 +20,19 @@ class _NewFoodScreenState extends State<NewFoodScreen> {
     setState(() {});
   }
 
+  bool init = true;
+  @override
+  void didChangeDependencies() {
+    if (init) {
+      Provider.of<DatabaseProvider>(context).foodTitleController.clear();
+      Provider.of<DatabaseProvider>(context).foodComponentController.clear();
+      Provider.of<DatabaseProvider>(context).foodImgController.clear();
+      Provider.of<DatabaseProvider>(context).foodWayController.clear();
+      init = false;
+    }
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -94,7 +107,7 @@ class _NewFoodScreenState extends State<NewFoodScreen> {
                 Provider.of<DatabaseProvider>(context, listen: false)
                     .changeIsFavoriteOnNewFoodScreen();
               },
-              title: Text('I have complete this food'),
+              title: Text('Put in favorites'),
             ),
             InkWell(
               onTap: () async {

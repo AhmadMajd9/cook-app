@@ -45,7 +45,6 @@ class DatabaseProvider extends ChangeNotifier {
   }
 
   updateFood(Food food) async {
-    food.isFavorites = !food.isFavorites;
     await DatabaseHelper.databaseHelper.updateOneFood(food);
     getAllFoods();
   }

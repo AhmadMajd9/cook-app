@@ -13,99 +13,95 @@ class FoodScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          SafeArea(
-            child: ListView(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 10.0, vertical: 10),
-                  child: Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Icon(
-                          Icons.arrow_back_ios_rounded,
-                          color: Colors.orange,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 60,
-                      ),
-                      Expanded(
-                        child: Text(
-                          "food".tr(),
-                          style: screen,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                SearchBar(
-                    //title: "Search Food",
+      body: SafeArea(
+        child: Column(
+          children: [
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+              child: Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Icon(
+                      Icons.arrow_back_ios_rounded,
+                      color: Colors.orange,
                     ),
-                SizedBox(
-                  height: 15,
-                ),
-                Consumer<DatabaseProvider>(
-                    builder: (context, providerInstance, x) {
-                  return ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: providerInstance.allFoods.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(top: 3),
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => IndividualItem(
-                                          food:
-                                              providerInstance.allFoods[index],
-                                        )),
-                              );
-                            },
-                            child: FoodCard(
-                              image: Image.asset(
-                                "assets/images/food1.png",
-                                fit: BoxFit.fill,
-                              ),
-                              food: providerInstance.allFoods[index],
-                            ),
-                          ),
-                        );
-                      });
-                }),
-                // SizedBox(
-                //   height: 5,
-                // ),
-                // FoodCard(
-                //   image: Image.asset(
-                //     "assets/images/apple_pie.jpg",
-                //     fit: BoxFit.cover,
-                //   ),
-                //   name: "Dark Chocolate Cake",
-                //   // shop: "Cakes by Tella",
-                //   // rating: "4.7",
-                // ),
-              ],
+                  ),
+                  SizedBox(
+                    width: 60,
+                  ),
+                  Expanded(
+                    child: Text(
+                      "food".tr(),
+                      style: screen,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          // Positioned(
-          //   bottom: 0,
-          //   left: 0,
-          //   child: BottomNavBarV2(
-
-          //   ),
-          // ),
-        ],
+            SizedBox(
+              height: 20,
+            ),
+            SearchBar(
+                //title: "Search Food",
+                ),
+            SizedBox(
+              height: 15,
+            ),
+            Expanded(
+              child: ListView(
+                children: [
+                  Consumer<DatabaseProvider>(
+                      builder: (context, providerInstance, x) {
+                    return ListView.builder(
+                        physics: BouncingScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: providerInstance.allFoods.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 3),
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => IndividualItem(
+                                            food: providerInstance
+                                                .allFoods[index],
+                                          )),
+                                );
+                              },
+                              child: FoodCard(
+                                image: Image.asset(
+                                  "assets/images/food1.png",
+                                  fit: BoxFit.fill,
+                                ),
+                                food: providerInstance.allFoods[index],
+                              ),
+                            ),
+                          );
+                        });
+                  }),
+                ],
+              ),
+            ),
+            // SizedBox(
+            //   height: 5,
+            // ),
+            // FoodCard(
+            //   image: Image.asset(
+            //     "assets/images/apple_pie.jpg",
+            //     fit: BoxFit.cover,
+            //   ),
+            //   name: "Dark Chocolate Cake",
+            //   // shop: "Cakes by Tella",
+            //   // rating: "4.7",
+            // ),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.orange,
