@@ -109,7 +109,7 @@ class _IndividualItemState extends State<IndividualItem> {
                                             horizontal: 20),
                                         child: Text(widget.food.name,
                                             style: screen),
-                                      ),
+                                      ), //aaa
                                       Spacer(),
                                       Padding(
                                         padding: const EdgeInsets.symmetric(
